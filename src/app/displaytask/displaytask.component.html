@@ -1,0 +1,55 @@
+
+<div
+  style="
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      width: max-content;
+      border: 1px solid black;
+      border-radius: 10px;
+      background-color: hsl(0, 68%, 65%);
+   "
+    [ngStyle]="{
+      'background-color': showtask.completed==true ? ' rgb(163, 206, 163)' : ' hsl(0, 68%, 65%)'
+    }"
+  >
+    <p style="width: max-content;margin: 20px;color: white;"*ngIf="!showtask.completed;else elsestrike" >
+      {{ showtask.newtask | titlecase }}
+    </p>
+    <ng-template #elsestrike>
+            <p style="text-decoration: line-through;">
+                 {{ showtask.newtask | titlecase }}
+            </p>
+    </ng-template>
+    <input type="checkbox" style="width: 30px;height: 30px;align-self: center;" (change)=" markComoplete(showtask.id)" [disabled]="showtask.completed">
+     <button
+      style="width: 5rem; background-color: rgb(144, 37, 135); color: aliceblue;margin: 10px;"
+      (click)="changeTaskname(showtask.id)"
+    >
+     Edit
+    </button>
+    <button
+      style="width: 5rem; background-color: crimson; color: aliceblue;margin: 10px;"
+      (click)="changeTask(showtask.id)"
+      [ngStyle]="{
+        'background-color':
+          showtask.completed === true ? ' green' : 'red'
+      }"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+
+<!-- 
+        <button style="width: 8rem;background-color: cadetblue;color: aliceblue;" (click)="changeTaskedit(showtask.id)">Edit</button> -->
