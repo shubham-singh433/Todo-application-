@@ -1,37 +1,18 @@
 <!-- tittle of the application -->
 <div
-  style="
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column-reverse;
-    align-content: center;
-  "
->
+class="header">
   <h1>Too-Doo Application</h1>
 </div>
 <!-- Form for value input -->
-<div style="justify-content: center">
+<div class="form">
   <form
     [formGroup]="taskform"
-    style="
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-      align-content: space-between;
-      justify-content: center;
-      align-items: center;
-    "
+    class="form-container"
     (ngSubmit)="Addtask()"
   >
     <input
-      style="
-        width: 40rem;
-        height: 2rem;
-        border-radius: 10px;
-        border-width: 2px;
-        padding: 5px;
-        font-family: 'Times New Roman', Times, serif;
-      "
+    class="input"
+ 
       type="text"
       formControlName="taskname"
     />
@@ -40,12 +21,7 @@
     </button> -->
     <button
       mat-raised-button
-      style="
-        width: 5rem;
-        height: 2rem;
-        border-radius: 10px;
-        background-color: rgb(86, 232, 215);
-      "
+     class="add_btn"
     >
       <fa-icon [icon]="faPlus" />
     </button>
@@ -63,7 +39,7 @@
 <!-- options to select from for filtering the data -->
 <select
   id="multiselect"
-  style="width: 15rem; height: 2rem"
+class="list"
   [(ngModel)]="selectedValue"
 >
   <option value="all">All</option>
@@ -73,15 +49,7 @@
 
 <!-- calling and displaying the component -->
 <div
-  style="
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-
-    gap: 10px;
-  "
+class="comp_conatiner"
 >
   <p *ngFor="let task of Tasks_array | completedFilter : selectedValue">
     <app-displaytask

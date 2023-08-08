@@ -1,22 +1,10 @@
 <div
-  style="
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-content: space-between;
-    justify-content: center;
-    align-items: center;
-  "
+class="card"
+
 >
   <!-- card outline mterial card -->
   <mat-card
-    style="
-      width: 30rem;
-      height: 10rem;
-      border: 1px solid black;
-      border-radius: 10px;
-      background-color: hsl(0, 68%, 65%);
-    "
+  class="card_continer"
     [ngStyle]="{
       'background-color':
         showtask.completed == true ? ' rgb(163, 206, 163)' : ' hsl(0, 68%, 65%)'
@@ -27,7 +15,8 @@
       <!-- header  -->
       <mat-card-header>
         <p
-          style="width: 25rem; color: white"
+        class="card_header"
+        
           *ngIf="!showtask.completed; else elsestrike"
         >
           {{ showtask.newtask | titlecase }}
@@ -51,12 +40,7 @@
         <!-- edit button -->
         <button
           mat-raised-button
-          style="
-            width: 5rem;
-            background-color: rgb(144, 37, 135);
-            color: aliceblue;
-            margin: 10px;
-          "
+          class="ebtn"
           (click)="changeTaskname(showtask.id)"
         >
           Edit
@@ -65,12 +49,8 @@
         <!-- delete button -->
         <button
           mat-raised-button
-          style="
-            width: 4rem;
-            background-color: crimson;
-            color: aliceblue;
-            margin: 10px;
-          "
+          class="del_btn"
+         
           (click)="changeTask(showtask.id)"
           [ngStyle]="{
             'background-color': showtask.completed === true ? ' green' : 'red'
