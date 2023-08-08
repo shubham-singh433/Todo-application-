@@ -1,3 +1,4 @@
+<!-- tittle of the application -->
 <div
   style="
     display: flex;
@@ -8,6 +9,7 @@
 >
   <h1>Too-Doo Application</h1>
 </div>
+<!-- Form for value input -->
 <div style="justify-content: center">
   <form
     [formGroup]="taskform"
@@ -33,37 +35,64 @@
       type="text"
       formControlName="taskname"
     />
-    <button style="width: 5rem; height: 2rem; border-radius: 10px" onclick="">
-      Add Task
+    <!-- <button  onclick="">
+     
+    </button> -->
+    <button
+      mat-raised-button
+      style="
+        width: 5rem;
+        height: 2rem;
+        border-radius: 10px;
+        background-color: rgb(86, 232, 215);
+      "
+    >
+      <fa-icon [icon]="faPlus" />
     </button>
   </form>
 </div>
 <br />
+<!-- <mat-form-field>
+ <mat-select [(ngModel)]='selectedValue'>
+    <mat-option value="all">All</mat-option>
+    <mat-option value="completed">Completed</mat-option>
+    <mat-option value="not">Not Completed</mat-option>
+  </mat-select>
+  </mat-form-field> -->
 
-<select id="multiselect" style="width: 15rem;height: 2rem;" [(ngModel)]='selectedValue'>
+<!-- options to select from for filtering the data -->
+<select
+  id="multiselect"
+  style="width: 15rem; height: 2rem"
+  [(ngModel)]="selectedValue"
+>
   <option value="all">All</option>
   <option value="completed">Completed</option>
-    <option value="not" >Not Completed</option>
+  <option value="not">Not Completed</option>
 </select>
-  <p *ngFor="let task of Tasks_array" >
-  <app-displaytask
-    [showtask]="task"
-    (changeAdd)="deleteTask($event)"
-    (markcompleted)="checkCompleted($event)"
-  (editName)="cachChange($event)"
-  ></app-displaytask>
-</p>
-<!-- <div *ngif="selectedValue==completed;then completed;else not"></div>
-<ng-template #completed>
-  <p *ngFor="let task of Tasks_array" >
-  <app-displaytask
-    [showtask]="task"
-    (changeAdd)="deleteTask($event)"
-    (markcompleted)="checkCompleted($event)"
-  (editName)="cachChange($event)"
-  ></app-displaytask>
-</p>
-</ng-template>
-<ng-template #not></ng-template> -->
 
+<!-- calling and displaying the component -->
+<div
+  style="
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
 
+    gap: 10px;
+  "
+>
+  <p *ngFor="let task of Tasks_array | completedFilter : selectedValue">
+    <app-displaytask
+      [showtask]="task"
+      (changeAdd)="deleteTask($event)"
+      (markcompleted)="checkCompleted($event)"
+      (editName)="cachChange($event)"
+    ></app-displaytask>
+  </p>
+</div>
+
+<!-- <ng-template *ngFor="let task of Tasks_array">
+    <h1>{{task.id}}</h1>
+  </ng-template> -->

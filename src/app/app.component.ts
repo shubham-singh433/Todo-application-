@@ -1,77 +1,79 @@
-import { Component,Input ,OnInit} from '@angular/core';
-import {FormGroup,FormControl} from '@angular/forms'
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { TaskType } from './Tasktype';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
+  faPlus = faPlus;
 
   title = 'Too-Doo';
-  @Input() changeid!:number;
-  // openInput:boolean=false;
-  Tasks_array:TaskType[]=[];
-  completed_array:TaskType[]=[];
-  notCompleted_array:TaskType[]=[];
-  selectedValue:string="all";
+  @Input() changeid!: number;
 
-    ngOnInit(): void {
-   const storedTasks = sessionStorage.getItem('tasks');
+  Tasks_array: TaskType[] = [];
+
+  selectedValue: string = 'all';
+
+  // initialized on first only one time
+  ngOnInit(): void {
+    const storedTasks = sessionStorage.getItem('tasks');
     if (storedTasks) {
       this.Tasks_array = JSON.parse(storedTasks);
     }
   }
-  taskform=new FormGroup({
-    taskname:new FormControl(''),
+
+  //reactive form
+  taskform = new FormGroup({
+    taskname: new FormControl(''),
   });
-  Addtask():void{
-     console.log( );
-    let task:string=this.taskform.get('taskname')?.value || '';
-    
-  let newTask: TaskType = {
+
+  // for adding new task
+  Addtask(): void {
+    let task: string = this.taskform.get('taskname')?.value || '';
+
+    if (task) {
+      let newTask: TaskType = {
         id: new Date().getTime(),
-        newtask:task,
-        completed: false
+        newtask: task,
+        completed: false,
       };
-    this.Tasks_array.push(newTask);
-        this.taskform.reset();
+      this.Tasks_array.push(newTask);
+      this.taskform.reset();
+      sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
+    } else {
+      alert('Please write the task');
+    }
+  }
+
+  //deleting task
+  deleteTask(value: number): void {
+    //filtering the array for the id
+    this.Tasks_array = this.Tasks_array.filter((task) => task.id !== value);
     sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
-
-  }
-  deleteTask(value:number):void
-  {
-      this.Tasks_array=this. Tasks_array.filter(task=>
-        task.id!==value);
-         sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
   }
 
-  checkCompleted(value:number):void{
-    let foundTask =this.Tasks_array.find(task => task.id === value)
-    if(foundTask)
-    {
-      foundTask.completed=true;
+  // mark completed
+  checkCompleted(value: number): void {
+    //searching for a particular value in array
+    let foundTask = this.Tasks_array.find((task) => task.id === value);
+    if (foundTask) {
+      foundTask.completed = true;
     }
-     sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
+    sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
+  }
 
-     this.completed_array=this.Tasks_array.filter(task=>task.completed===true)
-     this.notCompleted_array=this.Tasks_array.filter(task=>task.completed===false)
-  }
-  cachChange(val:number):void{
-    let foundTask=this.Tasks_array.find(task => task.id === val)
-    let newname=prompt("enter new name");
-    if(foundTask&&newname)
-    {
-      foundTask.newtask=newname;
+  //to change the name of task
+  cachChange(val: number): void {
+    //searching for a particular value in array
+    let foundTask = this.Tasks_array.find((task) => task.id === val);
+    let newname = prompt('enter new name');
+    if (foundTask && newname) {
+      foundTask.newtask = newname;
     }
-     sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
+    sessionStorage.setItem('tasks', JSON.stringify(this.Tasks_array));
   }
-  // selectOption(event:Event):void{
-  //  console.log(event.);
-  
-  //   // var selectElement =document.getElementById("multiselect");
-  //   // console.log(selectElement);
-  // // var selectedValue = selectElement?.value;
-  
-  // }
 }
